@@ -6,7 +6,7 @@ var async = require("async");
  * [a code源码]
  * @type {String}
  */
-var a = '[{"lotterytype":"SportteryNWDL","match":"100#1006,1007,1008,1009,1010,1011,1001|1006#20,36,37,40,136,155,196,238,242,325|1007#18,24,44,131,182,402|1008#1,11,13,14,16,27,28,133,140,246,270,295,308,436,460|1009#7,357,384,463,465,480,498,679,1124,1132|1010#19,21,29,80,101,213,217,323,327,328,329,330,333,334,335,336,346,373,495,1024|1011#851,853|1001#8,17,23,34,35","option":"","filter":"555#33,23,22,21,12","sort":"428#2014-09-02_2_1_8","pass":"111#100_2","update_time":"2014-09-02 18:26:18","ver":1}]'
+var a = '[{"lotterytype":"SportteryNWDL","match":"100#1007,1008,1009,1011|1001#35,8,17,34|1011#853,851|1010#19,29,80,101,213,217,323,327,328,329,330,333,334,335,336,346,373,1024|1006#20,36,37,40,136,155,238,325,242|1007#18,24,44,131,182,402|1008#1,11,13,14,27,28,133,140,246,270,295,308,436,460,16|1009#357,384,463,465,480,498,1124,1132,7,679|2029#3-4|202#3-4","option":"","filter":"555#12,21,22,13,31|888#3","sort":"4259#2014-09-18_1_0_1","pass":"111#100_2","update_time":"2014-09-19 00:09:04","ver":1}]'
 
 /**
  * [json 解析源码]
@@ -63,8 +63,8 @@ fs.readFile("code.json","utf-8",function (err,list){
 				}
 				else
 				{
-					console.log("详细：" + result)
-					content.push("详细：" + result,"\n")
+					console.log("联赛："+ base.getPriceName(code,"match",s_match[0]) + " 内部 "  + result)
+					content.push("联赛：" + s_match[0] + result,"\n")
 				}
 			}
 		}
@@ -73,10 +73,23 @@ fs.readFile("code.json","utf-8",function (err,list){
 			var temp = s_match[1].split(",")
 			// console.log(temp)
 			var result = base.getPriceName(code,"match",s_match[0])
-			console.log("赔率："+ result)
-			content.push("赔率："+ result,"\n")
-			console.log("范围：" + temp)
-			content.push("范围：" + temp,"\n")
+			if( s_match[0].length == 3 )
+			{
+				//初始赔率
+				console.log("初始赔率："+ result)
+				content.push("初始赔率："+ result,"\n")
+				console.log("范围：" + temp)
+				content.push("范围：" + temp,"\n")
+			}
+			else
+			{
+				//新赔
+				console.log("最新赔率：" + result)
+				content.push("最新赔率："+ result,"\n")
+				console.log("范围：" + temp)
+				content.push("范围：" + temp,"\n")
+			}
+
 		}
 	}//end of match
 
@@ -207,15 +220,3 @@ fs.readFile("code.json","utf-8",function (err,list){
 })
 
 }//结束判断 是否为多场次选取
-
-
-// fs.unlink('result.txt', function (){
-	// start(function(err,content){
-	
-
-
-
-
-
-	// })
-// });//end of unlink
