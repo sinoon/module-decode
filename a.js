@@ -1,4 +1,6 @@
 var fs = require("fs")
+var base = require("./base.js")
+
 
 /**
  * [a code源码]
@@ -21,17 +23,19 @@ var json = eval(a)
  * @type {[string]}
  */
 var lotterytype = json[0]["lotterytype"]
-var match = json[0]["match"]
+var match = json[0]["match"].split("|")
 var option = json[0]["option"]
 var sort = json[0]["sort"]
 var pass = json[0]["pass"]
+var filter = json[0]["filter"].split("|")
 var update_time = json[0]["update_time"]
 
 
 
 fs.readFile("code.json","utf-8",function (err,list){
 	var code = eval(list)
-	var _match = match.split("|")
+
+	var _match = match
 	// var _match = match.split("|")
 
 	//获取联赛的筛选
@@ -39,13 +43,13 @@ fs.readFile("code.json","utf-8",function (err,list){
 		// console.log(_match)
 		var s_match = _match[i].split("#")
 		// console.log(s_match)
-		if( isNum(code , s_match[0]) )
+		if( base.isNum(code , s_match[0]) )
 		{
 
 			var temp = s_match[1].split(",")
 			// console.log(temp)
 			for (var i_1 = 0; i_1 < temp.length; i_1++) {
-				var result = getName(code,s_match[0],temp[i_1])
+				var result = base.getName(code,s_match[0],temp[i_1])
 				// console.log("详细：" + result)
 				if( s_match[0] == "100" )
 				{
@@ -55,61 +59,25 @@ fs.readFile("code.json","utf-8",function (err,list){
 				{
 					console.log("详细：" + result)
 				}
-			};
+			}
 		}
 		else//赔率
 		{
 			var temp = s_match[1].split(",")
 			// console.log(temp)
-			var result = getPriceName(code,s_match[0])
+			var result = base.getPriceName(code,s_match[0])
 			console.log("赔率："+ result)
 			console.log("范围：" + temp)
 		}
+	}//end of match
+
+	//码型提取
+	for (var i = 0; i < filter.length; i++) {
+		var temp = filter[i].split("#")
+		var result_1 = base.filter_type(code,temp[0])
+		var result_2 = base.filter_name(code,temp[0],temp[1])
+		console.log(result_2)
+		// console.log(result_1 , ":" ,result_2)
 	};
 
 })
-
-/**
- * [isNum 判断是否为自定义区间]
- * @param  {[json]}  code
- * @param  {[数值]}  num
- * @return {Boolean}
- */
-function isNum(code,num)
-{
-	var temp_1 = code[0]["match"]["H985"]["child"];
-	for (var i = 0; i < temp_1.length; i++) {
-		if( temp_1[i] == "H" + num )
-			return false;
-	};
-	var temp_2 = code[0]["match"]["H9859"]["child"]
-	for (var i = 0; i < temp_2.length; i++) {
-		if( temp_2[i] == "H" + num )
-			return false
-	};
-	return true
-}
-
-/**
- * [getName 获取对应中文名字]
- * @json地图  {[json]} code
- * @对应的ID  {[type]} id
- * @对应的节点  {[type]} point
- * @return {[type]}
- */
-function getName(code,id,point)
-{
-	return code[0]["match"]["H" + id]["default"][point]
-}
-
-/**
- * [getPriceName 获取对于赔率的名字]
- * @param  {[type]} code
- * @param  {[type]} id
- * @param  {[type]} point
- * @return {[type]}
- */
-function getPriceName(code,id)
-{
-	return code[0]["match"]["H" + id]["name"]
-}
