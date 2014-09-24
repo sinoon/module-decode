@@ -6,7 +6,7 @@ var async = require("async");
  * [a code源码]
  * @type {String}
  */
-var a = '[{"lotterytype":"SportteryNWDL","match":"121#1.48-1.66,1.86-2.03,2.04-2.24,2.25-10000.0|122#2.69-2.91,3.45-3.93,2.92-3.14,3.15-3.44,2.5-2.7|100#1001,1011|1001#8,17,23,34,35|1006#36,37,136,196,238,20|1007#24,44,131,182|1008#1,11,13,14,16,28,133,140,246,270,295,308,436,460|1009#7,357,463,465,498,1124,1132|1010#19,21,29,80,213,217,323,327,328,329,330,333,335,336,346,495,1024|1011#851,853","option":"","filter":"555#11,12,22|888#1","sort":"427#2014-09-09_2_0_1","pass":"111#100_2","update_time":"2014-09-09 18:03:15","ver":1}]'
+var a = '[{"lotterytype":"SportteryNWDL","match":"100#1006,1007,1008,1009,1010,1011,1001|1006#20,36,37,40,136,155,196,238,242,325|1007#18,24,44,131,182,402|1008#1,11,13,14,16,27,28,133,140,246,270,295,308,436,460|1009#7,357,384,463,465,480,498,679,1124,1132|1010#19,21,29,80,101,213,217,323,327,328,329,330,333,334,335,336,346,373,495,1024|1011#851,853|1001#8,17,23,34,35","option":"","filter":"555#33,23,22,21,12","sort":"428#2014-09-02_2_1_8","pass":"111#100_2","update_time":"2014-09-02 18:26:18","ver":1}]'
 
 /**
  * [json 解析源码]
@@ -86,8 +86,8 @@ fs.readFile("code.json","utf-8",function (err,list){
 	console.log("过滤")
 	content.push("过滤","\n")
 	//filter
-	for (var i = 0; i < filter.length; i++) {
-		var temp = filter[i].split("#")
+	for (var i_2 = 0; i_2 < filter.length; i_2++) {
+		var temp = filter[i_2].split("#")
 		if( temp[0] == "999"  ) //赔率积
 		{
 			var result = temp[1].split(",")
@@ -112,11 +112,12 @@ fs.readFile("code.json","utf-8",function (err,list){
 		}
 		else
 		{
-			var result_1 = base.filter_type(code,temp[0])
-			var result_2 = base.filter_name(code,temp[0],temp[1])
+			// console.log(temp[0],temp[1])
+			var filter_result_1 = base.filter_type(code,temp[0])
+			var filter_result_2 = base.filter_name(code,temp[0],temp[1])
 
-			console.log(result_1 , ":" ,result_2)
-			content.push(result_1 , ":" ,result_2,"\n")
+			console.log(filter_result_1 , ":" ,filter_result_2.toString())
+			content.push(filter_result_1 , ":" ,filter_result_2,"\n")
 		}
 	}//end of filter
 
@@ -143,9 +144,9 @@ fs.readFile("code.json","utf-8",function (err,list){
 			{
 				var temp = s_option[1].split(",")
 				// console.log(temp)
-				for (var i_1 = 0; i_1 < temp.length; i_1++) {
+				for (var i_3 = 0; i_3 < temp.length; i_3++) {
 					var result_1 = base.getPriceName(code,"option",s_option[0])
-					var result_2 = base.getName(code,"option",s_option[0],temp[i_1])
+					var result_2 = base.getName(code,"option",s_option[0],temp[i_3])
 					// console.log("详细：" + result)
 					console.log(result_1 , ":" , result_2)
 					content.push(result_1 , ":" , result_2,"\n")
