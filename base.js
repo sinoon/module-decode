@@ -38,9 +38,9 @@ exports.isNum = isNum
  * @对应的节点  {[type]} point
  * @return {[type]}
  */
-function getName(code,id,point)
+function getName(code,scope,id,point)
 {
-	return code[0]["match"]["H" + id]["default"][point]
+	return code[0][scope]["H" + id]["default"][point]
 }
 exports.getName = getName
 
@@ -51,9 +51,9 @@ exports.getName = getName
  * @param  {[type]} point
  * @return {[type]}
  */
-function getPriceName(code,id)
+function getPriceName(code,scope,id)
 {
-	return code[0]["match"]["H" + id]["name"]
+	return code[0][scope]["H" + id]["name"]
 }
 exports.getPriceName = getPriceName
 
@@ -79,3 +79,9 @@ function filter_name(code,id,point)
 	return code[0]["filter"]["H" + id]["default"][point]
 }
 exports.filter_name = filter_name
+
+function getSortName(code,point)
+{
+	return code[0]["sort"]["S001"]["default"][point]
+}
+exports.getSortName = getSortName
