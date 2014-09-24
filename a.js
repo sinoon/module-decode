@@ -4,7 +4,7 @@ var fs = require("fs")
  * [a code源码]
  * @type {String}
  */
-var a = '[{"lotterytype":"SportteryNWDL","match":"100#1001,1008,1011|1001#8,17,23,34,35|1006#238,20,36,37,40,136,155,325|1007#24,44,131|1008#1,11,13,14,16,27,28,436,308,295,270,246,140,133,460|1009#357,384,463,465,480,498,679,1124,1132|1011#851,853|1010#19,21,29,80,101,213,217,323,327,328,329,330,333,334,335,336,346,373,1024|2029#3-4|1109#3-4","option":"","filter":"555#12,13,21,22,31|888#3","sort":"4259#2014-09-08_2_0_1","pass":"111#100_2","update_time":"2014-09-08 21:21:42","ver":1}]'
+var a = '[{"lotterytype":"SportteryNWDL","match":"100#1001,1008,1011|1001#8,17,23,34,35|1006#238,20,36,37,40,136,155,325|1007#24,44,131|1008#1,11,13,14,16,27,28,436,308,295,270,246,140,133,460|1009#357,384,463,465,480,498,679,1124,1132|1011#851,853|1010#19,21,29,80,101,213,217,323,327,328,329,330,333,334,335,336,346,373,1024|2029#3-4,4-5|1109#3-4","option":"","filter":"555#12,13,21,22,31|888#3","sort":"4259#2014-09-08_2_0_1","pass":"111#100_2","update_time":"2014-09-08 21:21:42","ver":1}]'
 
 /**
  * [json 解析源码]
@@ -59,7 +59,11 @@ fs.readFile("code.json","utf-8",function (err,list){
 		}
 		else//赔率
 		{
-			getPriceName(code,s_match[0],temp[i_2])
+			var temp = s_match[1].split(",")
+			// console.log(temp)
+			var result = getPriceName(code,s_match[0])
+			console.log("赔率："+ result)
+			console.log("范围：" + temp)
 		}
 	};
 
@@ -105,7 +109,7 @@ function getName(code,id,point)
  * @param  {[type]} point
  * @return {[type]}
  */
-function getPriceName(code,id,point)
+function getPriceName(code,id)
 {
-	return code[0]["match"]["H" + id]["child"][point]
+	return code[0]["match"]["H" + id]["name"]
 }
