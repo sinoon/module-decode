@@ -41,29 +41,25 @@ fs.readFile("code.json","utf-8",function (err,list){
 		// console.log(s_match)
 		if( isNum(code , s_match[0]) )
 		{
-			//如果有五大联赛集合
-			if( s_match[0] == "100" )
-			{
-				var temp = s_match[1].split(",")//此时的temp值 是五大联赛集合值，不是详细值
-				// console.log(temp)
-				for (var i = 0; i < temp.length; i++) {
-					var result = getName(code,s_match[0],temp[i])
+
+			var temp = s_match[1].split(",")
+			// console.log(temp)
+			for (var i_1 = 0; i_1 < temp.length; i_1++) {
+				var result = getName(code,s_match[0],temp[i_1])
+				// console.log("详细：" + result)
+				if( s_match[0] == "100" )
+				{
 					console.log("联赛集合：" + result)
-				};
-			}
-			else
-			{
-				var temp = s_match[1].split(",")
-				// console.log(temp)
-				for (var i_1 = 0; i_1 < temp.length; i_1++) {
-					var result = getName(code,s_match[0],temp[i_1])
+				}
+				else
+				{
 					console.log("详细：" + result)
-				};
-			}
+				}
+			};
 		}
 		else//赔率
 		{
-			s_match[0]
+			getPriceName(code,s_match[0],temp[i_2])
 		}
 	};
 
