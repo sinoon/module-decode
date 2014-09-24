@@ -55,6 +55,17 @@ exports.filter_type = filter_type
 
 function filter_name(code,id,point) 
 {
+	if( id == "555" )
+	{
+		var result = []
+		var temp;
+		point = point.split(",")
+		for (var i = 0; i < id.length; i++) {
+			temp = code[0]["filter"]["H" + id]["default"][point[i]]
+			result.push(temp)
+		}
+		return result
+	}
 	return code[0]["filter"]["H" + id]["default"][point]
 }
 exports.filter_name = filter_name
