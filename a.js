@@ -63,21 +63,10 @@ fs.readFile("code.json","utf-8",function (err,list){
 		}
 		else//赔率
 		{
-			
+			s_match[0]
 		}
 	};
 
-	//赔率相关
-	// for (var i = 0; i < _match.length; i++) {
-	// 	_match[i]
-	// };
-
-	// var s_match = _match[0].split("#")
-	//分割完毕-105,3.0-3.2
-	// console.log(_match)
-
-	// isNum(code,"100")
-	// console.log(code[0]["match"])
 })
 
 /**
@@ -111,4 +100,16 @@ function isNum(code,num)
 function getName(code,id,point)
 {
 	return code[0]["match"]["H" + id]["default"][point]
+}
+
+/**
+ * [getPriceName 获取对于赔率的名字]
+ * @param  {[type]} code
+ * @param  {[type]} id
+ * @param  {[type]} point
+ * @return {[type]}
+ */
+function getPriceName(code,id,point)
+{
+	return code[0]["match"]["H" + id]["child"][point]
 }
