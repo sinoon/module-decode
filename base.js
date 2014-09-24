@@ -70,7 +70,7 @@ function filter_name(code,id,point)
 		var result = []
 		var temp;
 		point = point.split(",")
-		for (var i = 0; i < id.length; i++) {
+		for (var i = 0; i < point.length; i++) {
 			temp = code[0]["filter"]["H" + id]["default"][point[i]]
 			result.push(temp)
 		}
