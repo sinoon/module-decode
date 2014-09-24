@@ -101,9 +101,9 @@ fs.readFile("code.json","utf-8",function (err,list){
 
 			console.log(result_1 , ":" ,result_2)
 		}
+	}//end of filter
 
-		
-		
-	};
-
+	//pass
+	_pass = pass.split("_")
+	console.log("过关方式：",_pass[1],"串 1")
 })
