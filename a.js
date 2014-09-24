@@ -37,8 +37,16 @@ fs.readFile("code.json","utf-8",function (err,list){
 	// console.log(_match)
 	for (var i = 0; i < _match.length; i++) {
 		var s_match = _match[i].split("#")
-		console.log(s_match)
-		// if( isNum(code , ) )
+		// console.log(s_match)
+		if( isNum(code , s_match[0]) )
+		{
+			var temp = s_match[1].split(",")
+			// console.log(temp)
+			for (var i = 0; i < temp.length; i++) {
+				var result = getName(code,s_match[0],temp[i])
+				console.log(result)
+			};
+		}
 	};
 	// var s_match = _match[0].split("#")
 	//分割完毕-105,3.0-3.2
@@ -67,4 +75,16 @@ function isNum(code,num)
 			return false
 	};
 	return true
+}
+
+/**
+ * [getName 获取对应中文名字]
+ * @json地图  {[json]} code
+ * @对应的ID  {[type]} id
+ * @对应的节点  {[type]} point
+ * @return {[type]}
+ */
+function getName(code,id,point)
+{
+	return code[0]["match"]["H" + id]["default"][point]
 }
