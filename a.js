@@ -34,20 +34,44 @@ fs.readFile("code.json","utf-8",function (err,list){
 	var _match = match.split("|")
 	// var _match = match.split("|")
 
-	// console.log(_match)
+	//获取联赛的筛选
 	for (var i = 0; i < _match.length; i++) {
+		// console.log(_match)
 		var s_match = _match[i].split("#")
 		// console.log(s_match)
 		if( isNum(code , s_match[0]) )
 		{
-			var temp = s_match[1].split(",")
-			// console.log(temp)
-			for (var i = 0; i < temp.length; i++) {
-				var result = getName(code,s_match[0],temp[i])
-				console.log(result)
-			};
+			//如果有五大联赛集合
+			if( s_match[0] == "100" )
+			{
+				var temp = s_match[1].split(",")//此时的temp值 是五大联赛集合值，不是详细值
+				// console.log(temp)
+				for (var i = 0; i < temp.length; i++) {
+					var result = getName(code,s_match[0],temp[i])
+					console.log("联赛集合：" + result)
+				};
+			}
+			else
+			{
+				var temp = s_match[1].split(",")
+				// console.log(temp)
+				for (var i_1 = 0; i_1 < temp.length; i_1++) {
+					var result = getName(code,s_match[0],temp[i_1])
+					console.log("详细：" + result)
+				};
+			}
+		}
+		else//赔率
+		{
+			
 		}
 	};
+
+	//赔率相关
+	// for (var i = 0; i < _match.length; i++) {
+	// 	_match[i]
+	// };
+
 	// var s_match = _match[0].split("#")
 	//分割完毕-105,3.0-3.2
 	// console.log(_match)
