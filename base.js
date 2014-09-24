@@ -16,6 +16,16 @@ function isNum(code,num)
 		if( temp_2[i] == "H" + num )
 			return false
 	};
+	var temp_3 = code[0]["match"]["H986"]["child"]
+	for (var i = 0; i < temp_3.length; i++) {
+		if( temp_3[i] == "H" + num )
+			return false
+	};
+	var temp_4 = code[0]["match"]["H9869"]["child"]
+	for (var i = 0; i < temp_4.length; i++) {
+		if( temp_4[i] == "H" + num )
+			return false
+	};
 	return true
 }
 exports.isNum = isNum
