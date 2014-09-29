@@ -30,9 +30,11 @@ function use( parameter , optionType,lotteryType,callback)
 			})
 			// callback(_sort(parameter,lotteryType))
 			break
-		// case "pass" :
-		// 	callback(_pass(parameter))
-		// 	break
+		case "pass" :
+			_pass(parameter,function(result){
+				callback(result)
+			})
+			break
 		default:
 			callback(false)
 	}
@@ -72,11 +74,11 @@ function _match(parameter,lotteryType,callback)
 				for (var i_1 = 0; i_1 < temp.length; i_1++) {
 					if( s_match[0] == "100" )
 					{
-						result.push("联赛集合：" + base.getName(code,"match",s_match[0],temp[i_1]) + "\n");
+						result.push({"联赛集合" : base.getName(code,"match",s_match[0],temp[i_1]) });
 					}
 					else
 					{
-						result.push("联赛：" + base.getPriceName(code,"match",s_match[0]) + base.getName(code,"match",s_match[0],temp[i_1]) + "\n");
+						result.push({"联赛" : base.getPriceName(code,"match",s_match[0]) + base.getName(code,"match",s_match[0],temp[i_1])} );
 					}
 				}
 			}
@@ -89,14 +91,14 @@ function _match(parameter,lotteryType,callback)
 				if( s_match[0].length == 3 )
 				{
 					//初始赔率
-					result.push("初始赔率：" + peilvName + "\n");
-					result.push("范围：" + temp + "\n");
+					result.push({"初始赔率" : peilvName });
+					result.push({"范围" : temp});
 				}
 				else
 				{
 					//新赔
-					result.push("最新赔率：" + peilvName + "\n");
-					result.push("范围：" + temp + "\n");
+					result.push({"最新赔率" : peilvName });
+					result.push({"范围：" : temp });
 				}
 			}
 		}
@@ -130,7 +132,7 @@ function _filter(parameter,lotteryType,callback)
 			{
 				var temp = s_filter[1].split(",");
 
-				result.push("赔率积：" + temp + "\n");
+				result.push({"赔率积" : temp });
 			}
 			else if( s_filter[0] == "556") // 按注排序截取
 			{
@@ -144,14 +146,22 @@ function _filter(parameter,lotteryType,callback)
 					var paixu = "概率由高到底排序";
 				}
 
-				result.push(paixu + ":"  + temp[1] + "\n");
+				result.push({paixu  : temp[1]});
 			}
 			else
 			{
 				var filter_result_1 = base.filter_type(code,s_filter[0]);
 				var filter_result_2 = base.filter_name(code,s_filter[0],s_filter[1]);
-
-				result.push(filter_result_1 + ":" + filter_result_2 + "\n");
+				// console.log(filter_result_1);
+				if( s_filter[0] == "888" )
+				{
+					result.push({"优化方式" : filter_result_2 })
+				}
+				else
+				{
+					result.push({ "码型类型"  :  filter_result_1 });
+					result.push({ "码型"  :  filter_result_2 });
+				}
 			}
 		};
 		callback(result);
@@ -161,9 +171,10 @@ function _filter(parameter,lotteryType,callback)
 function _pass(parameter,callback)
 {
 	var result = [];
-	var temp = parameter.split("_");
 
-	result.push("过关方式： " + temp[1] + " 串 1 "  + "\n");
+	var temp = String(parameter).split("_");
+
+	result.push( {"过关方式" : temp[1] + " 串 1 "  });
 	callback(result);
 }
 
@@ -204,16 +215,16 @@ function _option( parameter,lotteryType,callback)
 				for (var i_1 = 0; i_1 < temp.length; i_1++) {
 					var result_1 = base.getPriceName(code,"option",s_option[0]);
 					var result_2 = base.getName(code,"option",s_option[0],temp[i_1]);
-
-					result.push(result_1 + " ：" + result_2 + "\n");
+					result.push({"筛选选项":result_1})
+					result.push({"选项内容":result_2});
 				};
 			}
 			else
 			{
 				var temp = s_option[1].split(",")
 				// console.log("temp")
-				result.push("赔率："+ base.getPriceName(code,"option",s_option[0]),"\n")
-				result.push("范围：" + temp,"\n")
+				result.push({"赔率": base.getPriceName(code,"option",s_option[0])})
+				result.push({"范围": temp})
 			}
 		};
 		callback(result);
@@ -253,9 +264,9 @@ function _sort(parameter,lotteryType,callback)
 		// console.log( "sdfsdfdf" + base.getSortName(code,sort_1 + "_" + sort_6))
 		var result_sort = base.getSortName(code,sort_1 + "_" + sort_6)
 
-		result.push("按期排序截取：",result_sort,"\n");
-		result.push("从第几场开始：",sort_7,"\n");
-		result.push("截取场数：",sort_5,"\n");
+		result.push({"按期排序截取":result_sort});
+		result.push({"从第几场开始":sort_7});
+		result.push({"截取场数":sort_5});
 
 		callback(result);
 	})
