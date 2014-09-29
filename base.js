@@ -97,10 +97,15 @@ function getModel(mId,callback)
 	  'Referer':'None'}}, function (err, res,body) {
 	  if (err) return err;
 
-	  var t = body.match("var methodlist = '(.*)'")
-	  var a = "[" + t[1] + "]";
+	  var _model = body.match("var methodlist = '(.*)'")
+	  var model = "[" + _model[1] + "]";
 
-	  callback(a);
+	  var _name = body.match("<h2 class=\"model_name\">(.*)<a href");
+	  var name = _name[1].split("-");
+	  var authorName = name[0];
+	  var modelName = name[1];
+
+	  callback(model,authorName,modelName);
 	  // 输出结果
 	});
 }
@@ -126,4 +131,4 @@ function getModelName(mId,callback)
 	
 }
 
-exports.getModelName = getModelName;
+exports.getModelName = getModelName; 
