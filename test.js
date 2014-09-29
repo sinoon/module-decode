@@ -1,8 +1,9 @@
 var base = require("./base");
 
-base.getModel("1411986036837",function (a){
-	// console.log(body);
+base.getModelName("1411986036837",function (a,b){
+	console.log(a);
+	console.log(b);
 
 
-	console.log(a)
+	
 })
