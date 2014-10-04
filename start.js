@@ -12,7 +12,7 @@ base.getModel("1410426920114",function (model,atthorName,modelName){
 			// console.log(i)
 			var temp = s1.length;
 			// console.log(temp)
-			for (var i_1 = 0; i_1 < 3; i_1++) {
+			for (var i_1 = 0; i_1 < 4; i_1++) {
 				console.log(i_1)
 				console.log(s1[i][i_1])
 				console.log("==========")
