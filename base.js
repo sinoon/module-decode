@@ -78,9 +78,31 @@ function filter_name(code,id,point)
 		}
 		return result
 	}
+	if( id == "5559" )
+	{
+		var result = []
+		var temp;
+		point = point.split(",")
+		for (var i = 0; i < point.length; i++) {
+			temp = filter_name_ndwl(code,point[i])
+			result.push(temp)
+		};
+		return result
+	}
 	return code[0]["filter"]["H" + id]["default"][point]
 }
 exports.filter_name = filter_name
+
+function filter_name_ndwl(code,key)
+{
+	var id = 5559;
+	for (var i = 1; i < 10; i++) {
+		if(code[0]["filter"]["H" + id]["default"][i]["key"] == key)
+		{
+			return code[0]["filter"]["H" + id]["default"][i]["val"]
+		}
+	};
+}
 
 function getSortName(code,point)
 {
@@ -90,12 +112,16 @@ exports.getSortName = getSortName
 
 function getModel(mId,callback)
 {
+	console.log("start get Model")
 	request({url:'http://winner.okooo.com/model/info?mid=' + mId,headers:{'User-Agent':'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
 	  'Accept':'text/html;q=0.9,*/*;q=0.8',
 	  'Accept-Charset':'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
 	  'Connection':'close',
 	  'Referer':'None'}}, function (err, res,body) {
 	  if (err) return err;
+
+	  // console.log("get body",body)
+	  // console.log()
 
 	  var _model = body.match("var methodlist = '(.*)'")
 	  var model = "[" + _model[1] + "]";
@@ -105,7 +131,24 @@ function getModel(mId,callback)
 	  var authorName = name[0];
 	  var modelName = name[1];
 
-	  callback(model,authorName,modelName);
+	  var zjl = body.match("var zjl = \"(.*)\";")[1]
+	  var yll = body.match("var yll = \"(.*)\";")[1]
+	  var tzqs = body.match("var tzqs = \"(.*)\";")[1]
+	  var zjqs = body.match("var zjqs = \"(.*)\";")[1]
+
+	  var pjyl = body.match("平均遗漏：<strong>(.*)<\/strong>")[1]
+	  var dqyl = body.match("当前遗漏：<strong>(.*)<\/strong>")[1]
+	  var pjzjhb = body.match("平均中奖回报：<strong>(.*)<\/strong>")[1]
+	  var ljgmrc = body.match("累计购买人次：<strong>(.*)<\/strong>")[1]
+	  var ljjj = body.match("累计奖金：<strong>(.*)<\/strong>")[1]
+	  var cjsj = body.match("创建时间：<strong>(.*)<\/strong>")[1]
+	  var sjqs = body.match("实战期数：<strong>(.*)<\/strong>")[1]
+	  var szylb = body.match("实战盈利比率：<strong>(.*)<\/strong>")[1]
+	  var szhbl = body.match("实战回报率：<strong>(.*)<\/strong>")[1]
+	  // console.log(dqyl)
+	  // console.log(modelName)
+
+	  callback(model,authorName,modelName,zjl,yll,tzqs,zjqs,pjyl,dqyl,pjzjhb,ljgmrc,ljjj,cjsj,sjqs,szylb,szhbl);
 	  // 输出结果
 	});
 }
@@ -132,3 +175,11 @@ function getModelName(mId,callback)
 }
 
 exports.getModelName = getModelName; 
+
+// function match_range(code,id)
+// {
+// 	var range = code[0]["match"]["H"+id]["default"];
+// 	for (var i = 0; i < range.length; i++) {
+// 		if( id == range[i] )
+// 	};
+// }
