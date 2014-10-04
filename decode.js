@@ -60,6 +60,12 @@ function decode(a,callback) {
 			result_1[i] = []
 			async.series([
 				function (callback) {
+					use(_lotterytype[i],"type",_lotterytype[i],function(result){
+						result_1[i].push(result)
+						callback(null,"type")
+					})//type
+				},
+				function (callback) {
 					use(_match[i],"match",_lotterytype[i], function(result) {
 							// console.log("循环：",i)
 							// console.log("match:",i)
@@ -67,32 +73,33 @@ function decode(a,callback) {
 							result_1[i].push(result)
 							callback(null,"match")
 						})//match
-					},
-					function (callback)	{
-						use(_option[i],"option",_lotterytype[i], function(result) 
-						{
-							debugger;
-							// console.log("option:",i)
-							// console.log(result);
-							result_1[i].push(result)
-							callback(null,"option")
-						})//option
-					},
-					function (callback) {
-						use(_sort[i],"sort",_lotterytype[i], function(result) 
-						{
-							debugger;
-							// console.log("sort:",i)
-							// console.log(result);
-							result_1[i].push(result)
-							callback(null,"sort")
-						})//sort
-					}],function (err,result) {
-						i++
-						// console.log(i)
-						// setTimeout(cb,1)
-						cb(null,i)
-					});//end of series
+				},
+				function (callback)	{
+					use(_option[i],"option",_lotterytype[i], function(result) 
+					{
+						debugger;
+						// console.log("option:",i)
+						// console.log(result);
+						result_1[i].push(result)
+						callback(null,"option")
+					})//option
+				},
+				function (callback) {
+					use(_sort[i],"sort",_lotterytype[i], function(result) 
+					{
+						debugger;
+						// console.log("sort:",i)
+						// console.log(result);
+						result_1[i].push(result)
+						callback(null,"sort")
+					})//sort
+				}],
+			function (err,result) {
+				i++
+				// console.log(i)
+				// setTimeout(cb,1)
+				cb(null,i)
+			});//end of series
 		},
 		function (err) {
 			// console.log("循环结束：",i)

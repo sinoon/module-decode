@@ -5,6 +5,11 @@ function use( parameter , optionType,lotteryType,callback)
 {
 	switch (optionType)
 	{
+		case "type" :
+			_type(lotteryType,function(result){
+				callback(result);
+			})
+			break
 		case "match" : 
 			_match(parameter,lotteryType,function (result){
 				callback(result);
@@ -270,6 +275,28 @@ function _sort(parameter,lotteryType,callback)
 
 		callback(result);
 	})
+}
+
+function _type(lotteryType,callback)
+{
+	var type = [];
+	var a = [
+		{"类型" : "胜平负"}
+	]
+	var b = [
+		{"类型" : "让球胜平负"}
+	]
+	if( lotteryType == "SportteryNWDL" )
+	{
+		//非让球模型
+		type.push(a)
+	}
+	else
+	{
+		//让球模型
+		type.push(b)
+	}
+	callback(type)
 }
 
 exports.use = use;
